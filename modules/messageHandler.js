@@ -20,10 +20,10 @@ exports.embed.queueSnippet = function (queue, paused) {
     return embed
 }
 
-exports.embed.songinfoEmbed = function ({ source, name, formattedDuration, url, thumbnail, views, likes, uploader, user }, queue) {
+exports.embed.songinfoEmbed = function ({ source, name, formattedDuration, url, thumbnail, views, likes, uploader, user }, queue, addQueue) {
     const embed = new EmbedBuilder()
-        .setColor(source === 'youtube' ? '#FF0000' : '#00FF00')
-        .setTitle(`Now Playing: ${name}`)
+        .setColor(source === 'youtube' ? '#FF0000' : '#F26F23')
+        .setTitle(`${addQueue ? 'Added song to queue' : 'Now Playing'}: ${name}`)
         .setDescription(`Requested by: ${user}`)
         .setURL(url)
         .setAuthor({ name: uploader.name , url: uploader.url })
@@ -32,6 +32,24 @@ exports.embed.songinfoEmbed = function ({ source, name, formattedDuration, url, 
             { name: '⏱Duration', value: formattedDuration, inline: true },
             { name: '👁️Views', value: String(views), inline: true },
             { name: '👍Likes', value: String(likes), inline: true },
+        )
+        .addFields(
+            { name: '🔉Volume', value: queue.volume + "%", inline: true },
+            { name: '🔁Loop', value: queue.repeatMode ? (queue.repeatMode === 2 ? 'All Queue' : 'This Song') : 'Off', inline: true }
+        )
+        .setTimestamp()
+    return embed
+}
+
+exports.embed.playlistinfoEmbed = function (playlist, queue, addQueue) {
+    const embed = new EmbedBuilder()
+        .setColor(playlist.source === 'youtube' ? '#FF0000' : '#F26F23')
+        .setTitle(`${addQueue ? 'Added playlist to queue' : 'Now Playing'}: ${playlist.name}`)
+        .setDescription(`Requested by: ${playlist.user}`)
+        .setURL(playlist.url)
+        .setThumbnail(playlist.thumbnail)
+        .addFields(
+            { name: '🎵Songs', value: String(playlist.songs.length)},
         )
         .addFields(
             { name: '🔉Volume', value: queue.volume + "%", inline: true },

@@ -16,12 +16,13 @@ module.exports = {
       .setTitle('Now Playing: ' + queue.songs[0].name)
       .setURL(queue.songs[0].url)
       .setDescription(`Uploaded by: \`${queue.songs[0].uploader.name}\` \n Requested by: ${queue.songs[0].user}`)
-      .addFields({ name: "Next up:", value: `\u200B` })
+      .addFields({ name: client.config.emoji.queue + "Next up:", value: `\u200B` })
       .setThumbnail(queue.songs[0].thumbnail)
 
     q.forEach((song, i) => {
-      if (i === 0) return
-      exampleEmbed.addFields({ name: i + ". " + song.name, value: `> Uploaded by:\`${queue.songs[0].uploader.name}\` \n >Requested by: ${queue.songs[0].user}` })
+      if (i === 0 || i > 23) return
+      if (i === 23) return exampleEmbed.addFields({ name: "And more...", value: `\u200B` })
+      exampleEmbed.addFields({ name: i + `. [${song.name}](${song.url})`, value: `> Uploaded by:\`${song.uploader.name}\` \n > Requested by: ${song.user}` })
     })
     interaction.reply({embeds: [exampleEmbed]})
   }

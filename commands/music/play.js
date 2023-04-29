@@ -1,5 +1,6 @@
-const { EmbedBuilder, SlashCommandBuilder } = require('discord.js')
+const { SlashCommandBuilder } = require('discord.js')
 const { embed: { titleEmbed } } = require('../../modules/messageHandler')
+const { SoundCloudPlugin } = require("@distube/soundcloud");
 
 module.exports = {
   inVoiceChannel: true,
@@ -13,10 +14,7 @@ module.exports = {
     ),
   async execute(interaction) {
     const client = interaction.client;
-    const keyword = interaction.options.getString(
-      "song"
-    );
-
+    const keyword = interaction.options.getString("song");
     const voiceChannel = interaction.member.voice.channel;
     const queue = await client.distube.getQueue(interaction);
 
@@ -38,20 +36,29 @@ module.exports = {
         });
       }
     }
-
     await interaction.reply({
-      embeds: [
-        new EmbedBuilder()
-          .setColor(client.config.settings.colorBG)
-          .setDescription(`🔍 | Looking for a song...`),
-      ],
+      embeds: [titleEmbed(client, "colorBG", "search", 'Searching...')],
       ephemeral: true,
     });
 
-    client.distube.play(voiceChannel, keyword, {
-      textChannel: interaction.channel,
-      member: interaction.member,
-    });
-    await interaction.deleteReply();
+    client.distube.search(keyword)
+      .then(success).catch(() => {
+        SoundCloudPlugin.search(keyword).then(success).catch(error);
+      });
+
+    function error() {
+      return interaction.editReply({
+        embeds: [titleEmbed(client, "colorError", "error", 'No search results found')],
+        ephemeral: true,
+      });
+    }
+
+    function success() {
+      interaction.editReply({ embeds: [titleEmbed(client, "colorBG", "search", 'Search found!')] })
+      client.distube.play(voiceChannel, keyword, {
+        textChannel: interaction.channel,
+        member: interaction.member,
+      });
+    }
   },
 }

@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js')
-const { embed: { titleEmbed, songinfoEmbed }, noQueue } = require('../../modules/messageHandler')
+const { embed: { titleEmbed }, noQueue } = require('../../modules/messageHandler')
 
 module.exports = {
   inVoiceChannel: true,
@@ -12,8 +12,7 @@ module.exports = {
     noQueue(interaction)
 
     try {
-      const song = await queue.skip()
-      interaction.reply({ embeds: [songinfoEmbed(song, queue)]})
+      interaction.reply({ embeds: [titleEmbed(client, "colorBG", "success", "song skipped")] })
     } catch (e) {
       interaction.reply({ embeds: [titleEmbed(client, "colorError", "error", e)]})
     }
