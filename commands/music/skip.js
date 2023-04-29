@@ -11,6 +11,7 @@ module.exports = {
     const queue = client.distube.getQueue(interaction)
     noQueue(interaction)
 
+    queue.skip()
     try {
       interaction.reply({ embeds: [titleEmbed(client, "colorBG", "success", "song skipped")] })
     } catch (e) {
