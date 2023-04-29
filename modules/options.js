@@ -1,5 +1,6 @@
 const { GatewayIntentBits } = require('discord.js');
 const { SoundCloudPlugin } = require('@distube/soundcloud')
+const { SpotifyPlugin } = require('@distube/spotify')
 const { YtDlpPlugin } = require('@distube/yt-dlp')
 
 exports.Discord = {
@@ -17,6 +18,9 @@ exports.DisTube = {
     emitAddSongWhenCreatingQueue: false,
     emitAddListWhenCreatingQueue: false,
     plugins: [
+        new SpotifyPlugin({
+            emitEventsAfterFetching: true
+        }),
         new SoundCloudPlugin(),
         new YtDlpPlugin()
     ]
