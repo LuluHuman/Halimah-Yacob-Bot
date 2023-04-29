@@ -1,5 +1,5 @@
 const { EmbedBuilder, SlashCommandBuilder } = require('discord.js')
-const { embed: {titleEmbed, queueSnippet} } = require('../../modules/messageHandler')
+const { embed: { titleEmbed, queueSnippet }, noQueue } = require('../../modules/messageHandler')
 
 module.exports = {
   inVoiceChannel: true,
@@ -9,12 +9,15 @@ module.exports = {
   async execute(interaction) {
     const client = interaction.client
     const queue = client.distube.getQueue(interaction)
-    const embed1 = titleEmbed(client, "colorWarning", "warning", 'There is nothing in the queue right now!')
-    if (!queue) return interaction.reply({ embeds: [embed1], ephemeral: true })
+    if (noQueue(interaction)) return;
+    clearInterval(client.inveral)
+    client.inveral = setInterval(() => {
+      musicControlls(client, musicControllsEmbed(song, queue))
+    }, 10000);
 
-    const embed2 = queueSnippet(queue, false)
-
+    const embed2 = queueSnippet(queue, !queue.paused)
     queue.resume()
-    interaction.reply({ embeds: [embed2] })
+    interaction.reply({ embeds: [embed2], ephemeral: true })
+    queue.textChannel.send({ embeds: [embed2] })
   }
 }

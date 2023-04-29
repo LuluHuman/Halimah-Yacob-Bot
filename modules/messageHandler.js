@@ -69,3 +69,38 @@ exports.noQueue = function (interaction) {
         return true
     }
 }
+
+exports.musicControlls = function (client, embed) {
+    const MusicPlayerCn = client.channels.cache.get('1101844417482080370')
+    const messges = MusicPlayerCn.messages.fetch('1101881761971048539')
+    messges.then(msg => msg.edit({ embeds: [embed], content: '' }))
+}
+
+exports.musicControllsEmbed = function ({ source, name, formattedDuration, url, thumbnail, views, likes, uploader, user, duration }, queue, addQueue) {
+    // [------------------------------]
+    // [-----O........................]
+    
+    const per = Math.floor((queue.currentTime / duration) * 30 ) 
+    console.log(per)
+    const bar = `[${'-'.repeat(per-1)}o${'.'.repeat(30 - per)}]`
+
+    const embed = new EmbedBuilder()
+        .setColor(source === 'youtube' ? '#FF0000' : '#F26F23')
+        .setTitle(`Now Playing:\n ${name}`)
+        .setDescription(`Requested by: ${user}`)
+        .setURL(url)
+        .setAuthor({ name: uploader.name, url: uploader.url })
+        .setThumbnail(thumbnail)
+        .addFields(
+            { name: '👁️Views', value: String(views), inline: true },
+            { name: '👍Likes', value: String(likes), inline: true },
+        )
+        .addFields(
+            { name: '🔉Volume', value: queue.volume + "%", inline: true },
+            { name: '🔁Loop', value: queue.repeatMode ? (queue.repeatMode === 2 ? 'All Queue' : 'This Song') : 'Off', inline: true },
+            { name: '📄Up next', value: queue.songs[1] ? queue.songs[1].name : 'No more songs in queue', inline: false},
+            { name: `⏱${formattedDuration}-${queue.formattedCurrentTime}`, value: bar, inline: false}
+        )
+        .setTimestamp()
+    return embed
+}

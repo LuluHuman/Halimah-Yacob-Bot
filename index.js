@@ -1,5 +1,5 @@
 //Packages
-const { embed: { songinfoEmbed, titleEmbed, playlistinfoEmbed } } = require('./modules/messageHandler')
+const { embed: { songinfoEmbed, titleEmbed, playlistinfoEmbed }, musicControlls, musicControllsEmbed } = require('./modules/messageHandler')
 const config = require('./config.json')
 const options = require('./modules/options')
 
@@ -11,6 +11,7 @@ const Discord = require('discord.js')
 const client = new Discord.Client(options.Discord)
 client.config = require('./config.json')
 client.distube = new DisTube(client, options.DisTube)
+client.inveral = setInterval(() => {}, 100000)
 client.commands = new Discord.Collection()
 client.aliases = new Discord.Collection()
 client.emotes = config.emoji
@@ -50,14 +51,31 @@ for (const file of eventFiles) {
 
 try {
   client.distube
-    .on('playSong', (queue, song) => queue.textChannel.send({ embeds: [songinfoEmbed(song, queue)] }))
+    .on('playSong', (queue, song) => {
+
+      clearInterval(client.inveral)
+      client.inveral = setInterval(() => {
+        musicControlls(client, musicControllsEmbed(song, queue))
+      }, 10000);
+      queue.textChannel.send({
+        embeds: [songinfoEmbed(song, queue)]
+      })
+    })
     .on('addSong', (queue, song) => queue.textChannel.send({ embeds: [songinfoEmbed(song, queue, true)] }))
-    .on('addList', (queue, playlist) => queue.textChannel.send({ embeds: [playlistinfoEmbed(playlist, queue, true)]}))
+    .on('addList', (queue, playlist) => queue.textChannel.send({ embeds: [playlistinfoEmbed(playlist, queue, true)] }))
     .on('error', (channel, e) => {
       if (channel) channel.send({ embeds: [titleEmbed(client, "colorError", "error", `An error encountered: ${e.toString().slice(0, 1974)}`)] })
     })
-    .on('empty', channel => channel.send({ embeds: [titleEmbed(client, "colorBG", "stop", `Leaving - Call empty`)] }))
-    .on('finish', queue => queue.textChannel.send({embeds: [titleEmbed(client, "colorBG", "stop", `Stopped - End of queue`)]}))
+    .on('empty', channel => {
+      clearInterval(client.inveral)
+      musicControlls(client, titleEmbed(client, "colorBG", "stop", `Nothing is currently playing`))
+      channel.send({ embeds: [titleEmbed(client, "colorBG", "stop", `Nothing is currently playing`)] })
+    })
+    .on('finish', queue => {
+      clearInterval(client.inveral)
+      musicControlls(client, titleEmbed(client, "colorBG", "stop", `Nothing is currently playing`))
+      queue.textChannel.send({ embeds: [titleEmbed(client, "colorBG", "stop", `Stopped - End of queue`)] })
+    })
 } catch (error) {
   console.log(error);
 }

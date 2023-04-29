@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js')
-const { embed: { titleEmbed } } = require('../../modules/messageHandler')
+const { embed: { titleEmbed }, musicControlls } = require('../../modules/messageHandler')
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -11,5 +11,6 @@ module.exports = {
 
     const embed = titleEmbed(client, "colorSuccess", "success", "Left voice channel")
     interaction.reply({ embeds: [embed] });
+    musicControlls(client, titleEmbed(client, "colorBG", "stop", `Nothing is currently playing`))
   }
 }
