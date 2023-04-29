@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js')
-const { embed: { titleEmbed, queueSnippet }, noQueue } = require('../../modules/messageHandler')
+const { embed: { titleEmbed, queueSnippet }, noQueue, musicControlls, musicControllsEmbed } = require('../../modules/messageHandler')
 
 module.exports = {
   inVoiceChannel: true,
