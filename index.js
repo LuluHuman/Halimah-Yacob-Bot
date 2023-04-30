@@ -10,6 +10,7 @@ const Discord = require('discord.js')
 
 const client = new Discord.Client(options.Discord)
 client.config = require('./config.json')
+client.db = require('./db.json');
 client.distube = new DisTube(client, options.DisTube)
 client.commands = new Discord.Collection()
 client.aliases = new Discord.Collection()

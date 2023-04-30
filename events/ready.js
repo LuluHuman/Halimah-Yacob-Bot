@@ -43,8 +43,8 @@ module.exports = {
         //     .addComponents(shuffle, stop, plapau, skip, queue);
 
 
-        // const MusicPlayerCn = client.channels.cache.get('1101844417482080370')
-        // const messges = MusicPlayerCn.messages.fetch('1101881761971048539')
+        const couting = client.channels.cache.get('1100462666486661190')
+        couting.messages
         // messges.then(msg => msg.edit({ content: ' ', components: [row] }))z
     },
 };
