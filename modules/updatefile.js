@@ -52,6 +52,9 @@ fs.readFile(path.join(__dirname, '../.gitignore'), 'utf8', async (err, data) => 
 
     getFiles().then(files => {
         for (const localpath in files) {
+            if (localpath.includes("node_modules")) continue;
+            console.log(`Updating file ${localpath}`);
+
             const url = files[localpath];
             axios.get(url).then(res => {
                 if (res.status == 200) {
@@ -71,3 +74,10 @@ fs.readFile(path.join(__dirname, '../.gitignore'), 'utf8', async (err, data) => 
     });
 
 });
+
+process.on("unhandledRejection", (reason, p) => {
+    console.log(reason, p)
+})
+process.on("uncaughtException", (err, origin) => {
+    console.log(err, origin)
+})
