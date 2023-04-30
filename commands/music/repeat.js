@@ -19,7 +19,6 @@ module.exports = {
     const client = interaction.client
     const queue = client.distube.getQueue(interaction)
     if (noQueue(interaction)) return;
-    clearInterval(client.inveral)
 
     var mode = interaction.options.getString('mode')
     mode = queue.setRepeatMode(Number(mode))

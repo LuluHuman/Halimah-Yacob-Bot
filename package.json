@@ -31,8 +31,11 @@
     "eslint-config-prettier": "^8.5.0",
     "ffmpeg": "^0.0.4",
     "ffmpeg-static": "^4.4.1",
+    "isomorphic-unfetch": "^4.0.2",
     "libsodium-wrappers": "^0.7.10",
-    "ytdl-core": "^4.11.4"
+    "spotify-url-info": "^3.2.3",
+    "ytdl-core": "^4.11.4",
+    "ytpl": "^2.3.0"
   },
   "devDependencies": {
     "eslint": "^8.20.0",

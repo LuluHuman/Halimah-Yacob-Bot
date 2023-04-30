@@ -42,14 +42,16 @@ exports.embed.songinfoEmbed = function ({ source, name, formattedDuration, url, 
 }
 
 exports.embed.playlistinfoEmbed = function (playlist, queue, addQueue) {
+    if (!queue) queue = { volume: "...", repeatMode: 0 }
     const embed = new EmbedBuilder()
-        .setColor(playlist.source === 'youtube' ? '#FF0000' : '#F26F23')
+        .setColor(playlist.source === 'youtube' ? '#FF0000' : '#1DB954')
         .setTitle(`${addQueue ? 'Added playlist to queue' : 'Now Playing'}: ${playlist.name}`)
         .setDescription(`Requested by: ${playlist.user}`)
         .setURL(playlist.url)
         .setThumbnail(playlist.thumbnail)
         .addFields(
-            { name: '🎵Songs', value: String(playlist.songs.length) },
+            { name: '🎵Songs', value: String(playlist.songs.length), inline: true },
+            { name: '⚠️Warning', value: "Playlist converted from Spotify to Youtube. May contain outros" },
         )
         .addFields(
             { name: '🔉Volume', value: queue.volume + "%", inline: true },
@@ -73,17 +75,10 @@ exports.noQueue = function (interaction) {
 exports.musicControlls = function (client, embed) {
     const MusicPlayerCn = client.channels.cache.get('1101844417482080370')
     const messges = MusicPlayerCn.messages.fetch('1101881761971048539')
-    messges.then(msg => msg.edit({ embeds: [embed], content: `setInveral Id: ${client.inveral}` }))
+    messges.then(msg => msg.edit({ embeds: [embed], content: `` }))
 }
 
 exports.musicControllsEmbed = function ({ source, name, formattedDuration, url, thumbnail, views, likes, uploader, user, duration }, queue, addQueue) {
-    // [------------------------------]
-    // [-----O........................]
-
-    const per = Math.floor((queue.currentTime / duration) * 30)
-    console.log(per)
-    const bar = `[${'-'.repeat(per)}@${'\_'.repeat(30 - per)}]`
-
     const embed = new EmbedBuilder()
         .setColor(source === 'youtube' ? '#FF0000' : '#F26F23')
         .setTitle(`Now Playing:\n ${name}`)
@@ -99,7 +94,7 @@ exports.musicControllsEmbed = function ({ source, name, formattedDuration, url, 
             { name: '🔉Volume', value: queue.volume + "%", inline: true },
             { name: '🔁Loop', value: queue.repeatMode ? (queue.repeatMode === 2 ? 'All Queue' : 'This Song') : 'Off', inline: true },
             { name: '📄Up next', value: queue.songs[1] ? queue.songs[1].name : 'No more songs in queue', inline: false },
-            { name: `⏱${formattedDuration}-${queue.formattedCurrentTime}`, value: bar, inline: false }
+            { name: `⏱Timestamp`, value: formattedDuration, inline: false }
         )
         .setTimestamp()
     return embed

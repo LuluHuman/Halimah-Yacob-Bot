@@ -11,7 +11,6 @@ const Discord = require('discord.js')
 const client = new Discord.Client(options.Discord)
 client.config = require('./config.json')
 client.distube = new DisTube(client, options.DisTube)
-client.inveral = setInterval(() => {}, 100000)
 client.commands = new Discord.Collection()
 client.aliases = new Discord.Collection()
 client.emotes = config.emoji
@@ -52,11 +51,7 @@ for (const file of eventFiles) {
 try {
   client.distube
     .on('playSong', (queue, song) => {
-
-      clearInterval(client.inveral)
-      client.inveral = setInterval(() => {
-        musicControlls(client, musicControllsEmbed(song, queue))
-      }, 10000);
+      musicControlls(client, musicControllsEmbed(song, queue))
       queue.textChannel.send({
         embeds: [songinfoEmbed(song, queue)]
       })
@@ -67,12 +62,10 @@ try {
       if (channel) channel.send({ embeds: [titleEmbed(client, "colorError", "error", `An error encountered: ${e.toString().slice(0, 1974)}`)] })
     })
     .on('empty', channel => {
-      clearInterval(client.inveral)
       musicControlls(client, titleEmbed(client, "colorBG", "stop", `Nothing is currently playing`))
       channel.send({ embeds: [titleEmbed(client, "colorBG", "stop", `Nothing is currently playing`)] })
     })
     .on('finish', queue => {
-      clearInterval(client.inveral)
       musicControlls(client, titleEmbed(client, "colorBG", "stop", `Nothing is currently playing`))
       queue.textChannel.send({ embeds: [titleEmbed(client, "colorBG", "stop", `Stopped - End of queue`)] })
     })

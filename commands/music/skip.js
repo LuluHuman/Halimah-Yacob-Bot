@@ -10,8 +10,7 @@ module.exports = {
     const client = interaction.client
     const queue = client.distube.getQueue(interaction)
     if (noQueue(interaction)) return;
-    clearInterval(client.inveral)
-
+    if (!queue.songs[1]) return interaction.reply({ embeds: [titleEmbed(client, "colorError", "error", "no song after this")], ephemeral: true })
     queue.skip()
     try {
       interaction.reply({ embeds: [titleEmbed(client, "colorBG", "success", "song skipped")], ephemeral: true })

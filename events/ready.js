@@ -45,6 +45,6 @@ module.exports = {
 
         // const MusicPlayerCn = client.channels.cache.get('1101844417482080370')
         // const messges = MusicPlayerCn.messages.fetch('1101881761971048539')
-        // messges.then(msg => msg.edit({ content: ' ', components: [row] }))
+        // messges.then(msg => msg.edit({ content: ' ', components: [row] }))z
     },
 };

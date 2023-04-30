@@ -10,10 +10,7 @@ module.exports = {
     const client = interaction.client
     const queue = client.distube.getQueue(interaction)
     if (noQueue(interaction)) return;
-    clearInterval(client.inveral)
-    client.inveral = setInterval(() => {
       musicControlls(client, musicControllsEmbed(song, queue))
-    }, 10000);
 
     const embed2 = queueSnippet(queue, !queue.paused)
     queue.resume()

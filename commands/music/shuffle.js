@@ -10,12 +10,8 @@ module.exports = {
         const client = interaction.client;
         const queue = client.distube.getQueue(interaction.guildId)
         if (noQueue(interaction)) return;
-        clearInterval(client.inveral)
-
         queue.shuffle()
-        client.inveral = setInterval(() => {
-            musicControlls(client, musicControllsEmbed(queue.songs[0], queue))
-        }, 10000);
+        musicControlls(client, musicControllsEmbed(queue.songs[0], queue))
         interaction.reply({ embeds: [titleEmbed(client, "colorBG", "queue", `Queue Shuffled`)], ephemeral: true })
         queue.textChannel.send({ embeds: [titleEmbed(client, "colorBG", "queue", `Queue Shuffled`)] })
     }

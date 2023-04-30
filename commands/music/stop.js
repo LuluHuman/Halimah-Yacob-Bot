@@ -10,7 +10,6 @@ module.exports = {
     const client = interaction.client;
     const queue = client.distube.getQueue(interaction.guildId)
     if (noQueue(interaction)) return;
-    clearInterval(client.inveral)
     
     queue.stop()
     interaction.reply({ embeds: [titleEmbed(client, "colorBG", "stop", `Stopped`)], ephemeral: true})
