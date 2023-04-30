@@ -66,11 +66,11 @@ fs.readFile(path.join(__dirname, '../.gitignore'), 'utf8', async (err, data) => 
                     console.log(`Failed to update ${localpath}`);
                 }
             }).catch(err => {
-                console.error(err);
+                console.log(err);
             });
         }
     }).catch(err => {
-        console.error(err);
+        console.log(err);
     });
 
 });
