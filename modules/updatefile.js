@@ -57,7 +57,7 @@ fs.readFile(path.join(__dirname, '../.gitignore'), 'utf8', async (err, data) => 
                 if (res.status == 200) {
                     fs.writeFileSync(localpath, res.data);
                     console.log(`Updated ${localpath}`);
-                } if(req.status == 404) {
+                } if(res.status == 404) {
                     console.log(`No file ${localpath}`);
                 }else {
                     console.log(`Failed to update ${localpath}`);
