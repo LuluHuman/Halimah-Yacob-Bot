@@ -13,7 +13,9 @@ module.exports = {
         clearInterval(client.inveral)
 
         queue.shuffle()
-        musicControlls(client, musicControllsEmbed(queue.songs[0], queue))
+        client.inveral = setInterval(() => {
+            musicControlls(client, musicControllsEmbed(queue.songs[0], queue))
+        }, 10000);
         interaction.reply({ embeds: [titleEmbed(client, "colorBG", "queue", `Queue Shuffled`)], ephemeral: true })
         queue.textChannel.send({ embeds: [titleEmbed(client, "colorBG", "queue", `Queue Shuffled`)] })
     }

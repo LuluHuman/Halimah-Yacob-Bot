@@ -2,19 +2,19 @@ const { EmbedBuilder, SlashCommandBuilder } = require('discord.js')
 const thismod = require('./messageHandler')
 
 exports.embed = {}
-exports.embed.titleEmbed = function (client, color, emote, title ) {
+exports.embed.titleEmbed = function (client, color, emote, title) {
     const embed = new EmbedBuilder()
         .setColor(client.config.settings[color])
-        .setAuthor({ name: client.config.emoji[emote]})
+        .setAuthor({ name: client.config.emoji[emote] })
         .setTitle(`${title}`)
-        return embed
+    return embed
 }
 
 exports.embed.queueSnippet = function (queue, paused) {
     const pause = paused === true ? 'Paused' : 'Resumed'
     const embed = new EmbedBuilder()
         .setColor("#2B2D31")
-        .setAuthor({name: "Song " + pause})
+        .setAuthor({ name: "Song " + pause })
         .setTitle(`${queue.songs[0].name} ${pause}`)
         .setDescription(queue.songs[1] ? `**${queue.songs[1].name}** up next` : 'No more songs in queue')
     return embed
@@ -26,7 +26,7 @@ exports.embed.songinfoEmbed = function ({ source, name, formattedDuration, url, 
         .setTitle(`${addQueue ? 'Added song to queue' : 'Now Playing'}: ${name}`)
         .setDescription(`Requested by: ${user}`)
         .setURL(url)
-        .setAuthor({ name: uploader.name , url: uploader.url })
+        .setAuthor({ name: uploader.name, url: uploader.url })
         .setThumbnail(thumbnail)
         .addFields(
             { name: '⏱Duration', value: formattedDuration, inline: true },
@@ -49,7 +49,7 @@ exports.embed.playlistinfoEmbed = function (playlist, queue, addQueue) {
         .setURL(playlist.url)
         .setThumbnail(playlist.thumbnail)
         .addFields(
-            { name: '🎵Songs', value: String(playlist.songs.length)},
+            { name: '🎵Songs', value: String(playlist.songs.length) },
         )
         .addFields(
             { name: '🔉Volume', value: queue.volume + "%", inline: true },
@@ -73,16 +73,16 @@ exports.noQueue = function (interaction) {
 exports.musicControlls = function (client, embed) {
     const MusicPlayerCn = client.channels.cache.get('1101844417482080370')
     const messges = MusicPlayerCn.messages.fetch('1101881761971048539')
-    messges.then(msg => msg.edit({ embeds: [embed], content: '' }))
+    messges.then(msg => msg.edit({ embeds: [embed], content: `setInveral Id: ${client.inveral}` }))
 }
 
 exports.musicControllsEmbed = function ({ source, name, formattedDuration, url, thumbnail, views, likes, uploader, user, duration }, queue, addQueue) {
     // [------------------------------]
     // [-----O........................]
-    
-    const per = Math.floor((queue.currentTime / duration) * 30 ) 
+
+    const per = Math.floor((queue.currentTime / duration) * 30)
     console.log(per)
-    const bar = `[${'-'.repeat(per-1)}o${'.'.repeat(30 - per)}]`
+    const bar = `[${'-'.repeat(per)}@${'\_'.repeat(30 - per)}]`
 
     const embed = new EmbedBuilder()
         .setColor(source === 'youtube' ? '#FF0000' : '#F26F23')
@@ -98,8 +98,8 @@ exports.musicControllsEmbed = function ({ source, name, formattedDuration, url, 
         .addFields(
             { name: '🔉Volume', value: queue.volume + "%", inline: true },
             { name: '🔁Loop', value: queue.repeatMode ? (queue.repeatMode === 2 ? 'All Queue' : 'This Song') : 'Off', inline: true },
-            { name: '📄Up next', value: queue.songs[1] ? queue.songs[1].name : 'No more songs in queue', inline: false},
-            { name: `⏱${formattedDuration}-${queue.formattedCurrentTime}`, value: bar, inline: false}
+            { name: '📄Up next', value: queue.songs[1] ? queue.songs[1].name : 'No more songs in queue', inline: false },
+            { name: `⏱${formattedDuration}-${queue.formattedCurrentTime}`, value: bar, inline: false }
         )
         .setTimestamp()
     return embed

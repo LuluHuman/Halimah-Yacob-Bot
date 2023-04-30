@@ -16,7 +16,7 @@ module.exports = {
     if (queue.paused) {
       queue.resume()
       client.inveral = setInterval(() => {
-        musicControlls(client, musicControllsEmbed(song, queue))
+        musicControlls(client, musicControllsEmbed(queue.songs[0], queue))
       }, 10000);
     } else {
       queue.pause()
