@@ -15,6 +15,7 @@ client.distube = new DisTube(client, options.DisTube)
 client.commands = new Discord.Collection()
 client.aliases = new Discord.Collection()
 client.emotes = config.emoji
+client.addingPlaylist = false
 
 const foldersPath = path.join(__dirname, 'commands');
 const eventsPath = path.join(__dirname, 'events');
@@ -58,9 +59,12 @@ try {
       })
     })
     .on('addSong', (queue, song) => queue.textChannel.send({ embeds: [songinfoEmbed(song, queue, true)] }))
-    .on('addList', (queue, playlist) => queue.textChannel.send({ embeds: [playlistinfoEmbed(playlist, queue, true)] }))
+    .on('addList', (queue, playlist) => {
+      if (client.addingPlaylist && queue.paused) queue.resume(); client.addingPlaylist = false
+      queue.textChannel.send({ embeds: [playlistinfoEmbed(playlist, queue, true)]})
+    })
     .on('error', (channel, e) => {
-      if (channel) channel.send({ embeds: [titleEmbed(client, "colorError", "error", `An error encountered: ${e.toString().slice(0, 1974)}`)] })
+        if (channel) channel.send({ embeds: [titleEmbed(client, "colorError", "error", `An error encountered: ${e.toString().slice(0, 1974)}`)] })
     })
     .on('empty', channel => {
       musicControlls(client, titleEmbed(client, "colorBG", "stop", `Nothing is currently playing`))

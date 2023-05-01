@@ -35,7 +35,8 @@ exports.embed.songinfoEmbed = function ({ source, name, formattedDuration, url, 
         )
         .addFields(
             { name: '🔉Volume', value: queue.volume + "%", inline: true },
-            { name: '🔁Loop', value: queue.repeatMode ? (queue.repeatMode === 2 ? 'All Queue' : 'This Song') : 'Off', inline: true }
+            { name: '🔁Loop', value: queue.repeatMode ? (queue.repeatMode === 2 ? 'All Queue' : 'This Song') : 'Off', inline: true },
+            { name: '⏱️Time', value: `${formattedDuration} / ${queue.formattedCurrentTime}`}
         )
         .setTimestamp()
     return embed
