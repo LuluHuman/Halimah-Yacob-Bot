@@ -12,7 +12,6 @@ module.exports = {
         if (message.channel.id == "1100462666486661190") {
             const db = client.db
             const curNum = db.curNum;
-            const lastUser = db.lastUser;
             
             const lastNum = parseInt(message.content);
             if (lastNum == curNum - 1) {

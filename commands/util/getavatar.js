@@ -5,7 +5,8 @@ module.exports = {
         .setName('Get Avatar')
         .setType(ApplicationCommandType.User),
 
-    execute: async (interaction, client) => {
+    execute: async (interaction) => {
+        const client = interaction.client;
         const target = await interaction.guild.members.fetch(
             interaction.targetId
         );

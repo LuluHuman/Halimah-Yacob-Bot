@@ -9,12 +9,12 @@ module.exports = {
         if (message.author.bot) return;
         const client = message.client;
 
-        message.channel.send({ embeds: [titleEmbed(client, "colorBG", "success", "I'M TAKING OVER NOW\nNext number: `205`")]});
+        //message.channel.send({ embeds: [titleEmbed(client, "colorBG", "success", "I'M TAKING OVER NOW\nNext number: `205`")]});
         if (message.channel.id == "1100462666486661190"){
             const db = client.db
             const curNum = db.curNum;
             const lastUser = db.lastUser;
-
+            if (Number.isNaN(parseInt(message.content))) return
             if (message.author.id == lastUser){
                 const newNum = Math.floor(curNum / 50) * 50
                 message.channel.send({ embeds: [titleEmbed(client, "colorBG", "error", 
