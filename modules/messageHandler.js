@@ -1,4 +1,4 @@
-const { EmbedBuilder, SlashCommandBuilder } = require('discord.js')
+const { EmbedBuilder } = require('discord.js')
 const thismod = require('./messageHandler')
 
 exports.embed = {}
@@ -9,6 +9,19 @@ exports.embed.titleEmbed = function (client, color, emote, title) {
         .setTitle(`${title}`)
     return embed
 }
+
+exports.embed.decideEmbed = function (client, color, emote, title, desc) {
+
+    const embed = new EmbedBuilder()
+        .setColor(color ? client.config.settings[color] : client.config.settings.colorBG)
+        .setTitle(title + emote)
+        .setDescription(desc)
+        .setTimestamp()
+        .setFooter({text: 'In memory of MasonBot (2021)', iconURL: "https://cdn.discordapp.com/attachments/821589662635393075/856808905690447913/8QTN5DD.png"});
+
+    return embed
+}
+
 
 exports.embed.queueSnippet = function (queue, paused) {
     const pause = paused === true ? 'Paused' : 'Resumed'

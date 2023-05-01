@@ -1,4 +1,5 @@
 const { Events } = require('discord.js');
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle, SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
     name: Events.InteractionCreate,
@@ -31,6 +32,22 @@ module.exports = {
                 client.commands.get('skip').execute(interaction);
             } else if (interaction.customId === 'que') {
                 client.commands.get('queue').execute(interaction);
+            } else if (interaction.customId === "morememes") {
+                const embed = await require('../modules/reddit')(client, "memes")
+                const morememes = new ButtonBuilder()
+                    .setCustomId('morememes')
+                    .setLabel('More Memes')
+                    .setStyle(ButtonStyle.Success);
+                const row = new ActionRowBuilder().addComponents(morememes);
+                interaction.reply({ embeds: [embed], components: [row] }).catch(err => console.log(err)); 
+            } else if (interaction.customId === "moreaww") {
+                const embed = await require('../modules/reddit')(client, "aww")
+                const morememes = new ButtonBuilder()
+                    .setCustomId('moreaww')
+                    .setLabel('More Memes')
+                    .setStyle(ButtonStyle.Success);
+                const row = new ActionRowBuilder().addComponents(morememes);
+                interaction.reply({ embeds: [embed], components: [row] }).catch(err => console.log(err)); 
             }
         } else if (interaction.isStringSelectMenu()) {
             // respond to the select menu
