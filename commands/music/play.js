@@ -46,7 +46,7 @@ module.exports = {
       interaction.editReply({ embeds: [titleEmbed(client, "colorBG", "search", 'Search found!')] })
 
       const items = source === "youtube" ? x.items : x.trackList
-      if (x.type !== "track" && !queue && source) playlistHandler(items, source)
+      if (x.type !== "track" && !queue && source) playlistHandler(items, source, x)
       if (source && items && items.length > 50) {
         interactionReply("editReply", "colorBG", "warning", `Loading Songs...`)
         if (queue) queue.pause(); client.addingPlaylist = true
@@ -69,7 +69,7 @@ module.exports = {
       });
     }
 
-    function playlistHandler(items, source) {
+    function playlistHandler(items, source, x) {
       const name = source === "youtube" ? x.title : x.name
       const icon = source === "youtube" ? x.bestThumbnail.url : x.coverArt.sources[0].url
       const playlist = {
