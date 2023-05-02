@@ -14,6 +14,7 @@ client.db = require('./db.json');
 client.distube = new DisTube(client, options.DisTube)
 client.commands = new Discord.Collection()
 client.aliases = new Discord.Collection()
+client.xpTimer = new Map()
 client.emotes = config.emoji
 client.addingPlaylist = false
 

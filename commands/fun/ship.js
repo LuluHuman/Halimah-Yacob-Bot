@@ -8,7 +8,7 @@ module.exports = {
         .setName('ship')
         .setDescription('ships users!!!')
         .addUserOption(option => option.setName('user1').setDescription('The first user to ship').setRequired(true))
-        .addUserOption(option => option.setName('user2').setDescription('The second user to ship')),
+        .addUserOption(option => option.setName('user2').setDescription('The second user to ship').setRequired(true)),
 
     async execute(interaction) {
         const client = interaction.client;
