@@ -18,9 +18,9 @@ module.exports = {
         const xpPath = path.join(__dirname, `../../xpDatabase/${user.id}`)
         if (fs.existsSync(xpPath) == false) {
             fs.mkdirSync(xpPath)
-            fs.writeFileSync(`${xpPath}\\xp`, "0")
+            fs.writeFileSync(path.join(xpPath, "/xp"), "0")
         }
-        var xp = fs.readFileSync(`${xpPath}\\xp`, "utf8")
+        var xp = fs.readFileSync(path.join(xpPath, "/xp"), "utf8")
         xp = parseInt(xp)
 
         var lvl = xpAnnouncemennts[Math.floor(xp / 1000) * 1000]
