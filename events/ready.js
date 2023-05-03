@@ -1,5 +1,5 @@
 const { Events, ActivityType } = require('discord.js');
-const { ActionRowBuilder, ButtonBuilder, ButtonStyle, SlashCommandBuilder } = require('discord.js');
+const fs = require('fs');
 module.exports = {
     name: Events.ClientReady,
     once: true,
@@ -10,7 +10,7 @@ module.exports = {
             activities: [{ name: `Singapore`, type: ActivityType.Watching}],
             status: 'dnd',
         });
-        const couting = client.channels.cache.get('1100462666486661190')
-        couting.messages
+        // const couting = client.channels.cache.get('1100462666486661190')
+        // couting.messages
     },
 };

@@ -7,12 +7,9 @@ module.exports = {
         if (message.author.bot || message.author.id == "1101327465974087731") return;
         const client = message.client;
         
-        fs.readdirSync(path.join(__dirname, '../eventModules/messageCreate')).forEach(file => {
-            
+        fs.readdirSync(path.join(__dirname, '../eventModules/messageCreate')).forEach(file => {            
             const event = require(`../eventModules/messageCreate/${file}`);
             event(client, message);
         });
-
-
     },
 };
