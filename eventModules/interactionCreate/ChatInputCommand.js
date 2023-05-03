@@ -10,14 +10,10 @@ module.exports = async (interaction) => {
     try {
         await command.execute(interaction);
     } catch (error) {
-        console.error(`Error executing ${interaction.commandName}`);
-        interaction.reply({
-            content: 
-            `There was an error trying to execute that command
-            \`\`\` at${interaction.commandName}
-            ${error}
-            \`\`\`
-            <@635303930879803412>`
+        console.error(error, `Error executing ${interaction.commandName}`);
+        interaction.channel.send({
+            content:
+                `There was an error trying to execute that command\n\`\`\` at ${interaction.commandName}\n${error}\n\`\`\`\n<@635303930879803412>`
         });
     }
 }

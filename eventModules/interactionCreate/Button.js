@@ -1,3 +1,4 @@
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle, SlashCommandBuilder } = require('discord.js');
 module.exports = async (interaction) => {
     const client = interaction.client;
     if (interaction.customId === 'shf') return client.commands.get('shuffle').execute(interaction);
@@ -6,7 +7,7 @@ module.exports = async (interaction) => {
     if (interaction.customId === 'skp') return client.commands.get('skip').execute(interaction);
     if (interaction.customId === 'que') return client.commands.get('queue').execute(interaction);
     if (interaction.customId === "morememes") {
-        const embed = await require('../modules/reddit')(client, "memes")
+        const embed = await require('../../modules/reddit')(client, "memes")
         const morememes = new ButtonBuilder()
             .setCustomId('morememes')
             .setLabel('More Memes')
@@ -16,10 +17,10 @@ module.exports = async (interaction) => {
         return
     }
     if (interaction.customId === "moreaww") {
-        const embed = await require('../modules/reddit')(client, "aww")
+        const embed = await require('../../modules/reddit')(client, "aww")
         const morememes = new ButtonBuilder()
             .setCustomId('moreaww')
-            .setLabel('More Memes')
+            .setLabel('More Aww')
             .setStyle(ButtonStyle.Success);
         const row = new ActionRowBuilder().addComponents(morememes);
         interaction.reply({ embeds: [embed], components: [row] }).catch(err => console.log(err));

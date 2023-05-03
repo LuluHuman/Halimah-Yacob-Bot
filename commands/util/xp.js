@@ -10,7 +10,7 @@ module.exports = {
         .addUserOption(option => option.setName('user').setDescription('user to show xp of').setRequired(false)),
 
     async execute(interaction) {
-        const  user = interaction.options.getUser('user') || interaction.user
+        const user = interaction.options.getUser('user') || interaction.user
         const { xpAnnouncemennts } = interaction.client.config
         await interaction.deferReply();
 
@@ -40,7 +40,7 @@ module.exports = {
         ctx.fillText(`LVL: ${lvl}`, 480, 245);
         ctx.fillText(`XP: ${xp}/ ${(Math.floor(xp / 1000) * 1000) + 1000}`, 480, 377);
         ctx.drawImage(avatar, 44.3, 44.3, 354.4, 354.4);
-        
+
         buf = canvas.toBuffer();
         const attachment = new AttachmentBuilder(buf, "xp.png")
         interaction.editReply({
