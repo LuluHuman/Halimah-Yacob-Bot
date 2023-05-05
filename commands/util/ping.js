@@ -12,8 +12,9 @@ module.exports = {
             fetchReply: true,
         })
             .catch(err => require('../../modules/handleError')(interaction, err))
-
-        const memory = Math.floor(process.memoryUsage().heapTotal / 1000000) + "/1000MB"
+        
+        const memory = Math.round(process.memoryUsage().heapTotal / 1024 / 1024 * 100) / 100 + "/1000MB"
+        const sSince = Math.floor((Date.now() - Math.floor(process.uptime() * 1000))/1000)
         const embed = new EmbedBuilder()
             .setAuthor({
                 name: "Ping",
@@ -24,7 +25,7 @@ module.exports = {
             .addFields([
                 { name: "> API Latency", value: `${client.ws.ping}ms`, inline: true },
                 { name: "> Discord Latency", value: `${message.createdTimestamp - interaction.createdTimestamp}ms`, inline: true },
-                { name: "> Uptime", value: `${Math.floor(process.uptime() * 1000)}ms`, inline: true },
+                { name: "> Uptime", value: `<t:${sSince}:R>`, inline: true },
                 { name: "> Memory Usage", value: memory }
             ])
             .setTimestamp()

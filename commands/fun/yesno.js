@@ -6,7 +6,7 @@ module.exports = {
         .setDescription('i say yes or no')
         .addStringOption(option => option.setName('question').setDescription('The question to ask').setRequired(true)),
     async execute(interaction) {
-        const yesno = Math.random() < 0.5 ? "Yes" : "No"
+        const yesno = Math.floor(Math.random() * 2) == 0 ? "Yes" : "No"
         const client = interaction.client;
         const question = interaction.options.getString('question');
 

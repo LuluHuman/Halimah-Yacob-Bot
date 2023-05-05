@@ -15,6 +15,9 @@ module.exports = async (interaction) => {
         const row = new ActionRowBuilder().addComponents(morememes);
         interaction.reply({ embeds: [embed], components: [row] }).catch(err => console.log(err))
             .catch(err => require('../../modules/handleError')(interaction, err))
+
+        interaction.message.edit({ components: [] })
+            .catch(err => require('../../modules/handleError')(interaction, err))
         return
     }
     if (interaction.customId === "moreaww") {
@@ -25,6 +28,30 @@ module.exports = async (interaction) => {
             .setStyle(ButtonStyle.Success);
         const row = new ActionRowBuilder().addComponents(morememes);
         interaction.reply({ embeds: [embed], components: [row] }).catch(err => console.log(err))
+            .catch(err => require('../../modules/handleError')(interaction, err))
+
+        interaction.message.edit({ components: [] })
+            .catch(err => require('../../modules/handleError')(interaction, err))
+        return
+    }
+    if (interaction.customId === "truth") {
+        require('../../modules/truthOrDare')('truth', interaction)
+        interaction.message.edit({ components: [] })
+            .catch(err => require('../../modules/handleError')(interaction, err))
+        return
+    }
+
+    if (interaction.customId === "dare") {
+        require('../../modules/truthOrDare')('dare', interaction)
+        interaction.message.edit({ components: [] })
+            .catch(err => require('../../modules/handleError')(interaction, err))
+        return
+    }
+
+    if (interaction.customId === "randomtnd") {
+        const tod = Math.floor(Math.random() * 2) == 0 ? 'truth' : 'dare'
+        require('../../modules/truthOrDare')(tod, interaction)
+        interaction.message.edit({ components: [] })
             .catch(err => require('../../modules/handleError')(interaction, err))
         return
     }
