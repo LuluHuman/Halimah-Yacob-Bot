@@ -24,6 +24,14 @@ module.exports = {
     mode = queue.setRepeatMode(Number(mode))
     mode = mode ? (mode === 2 ? 'Repeat queue' : 'Repeat song') : 'Off'
 
-    interaction.reply({ embeds: [titleEmbed(client, "colorBG", "repeat", `Set repeat mode to \`${mode}\``)]})
+    interaction.reply({ embeds: [titleEmbed(client, "colorBG", "repeat", `Set repeat mode to \`${mode}\``)], ephemeral: true })
+      .catch(err => require('../../modules/handleError')(interaction, err))
+    const MusicPlayerCn = client.channels.cache.get('1101844417482080370')
+    const msg = await MusicPlayerCn.send({ embeds: [titleEmbed(client, "colorBG", "repeat", `Set repeat mode to \`${mode}\``)] })
+      .catch(err => require('../../modules/handleError')(interaction, err))
+    setTimeout(() => {
+      musicControlls(client, musicControllsEmbed(queue.songs[0], queue))
+      msg.delete()
+    }, 5000);
   }
 }

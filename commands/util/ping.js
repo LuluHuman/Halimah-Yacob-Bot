@@ -10,7 +10,8 @@ module.exports = {
         const client = interaction.client;
         const message = await interaction.deferReply({
             fetchReply: true,
-        });
+        })
+            .catch(err => require('../../modules/handleError')(interaction, err))
 
         const memory = Math.floor(process.memoryUsage().heapTotal / 1000000) + "/1000MB"
         const embed = new EmbedBuilder()
@@ -28,6 +29,7 @@ module.exports = {
             ])
             .setTimestamp()
 
-        await interaction.editReply({ embeds: [embed] });
+        await interaction.editReply({ embeds: [embed] })
+            .catch(err => require('../../modules/handleError')(interaction, err))
     }
 }

@@ -7,10 +7,6 @@ module.exports = {
     async execute(interaction) {
         const client = interaction.client;
         const embed = await require('../../modules/reddit')(client, "aww")
-        try {
-            interaction.reply({ embeds: [embed] }).catch(err => console.log(err));
-        } catch (error) {
-            console.log(error);
-        }
+        interaction.reply({ embeds: [embed] }).catch(err => require('../../modules/handleError')(interaction, err))
     }
 }

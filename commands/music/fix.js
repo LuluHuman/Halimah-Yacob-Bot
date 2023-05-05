@@ -21,5 +21,6 @@ module.exports = {
         }, 1000)
 
         interaction.reply({ embeds: [titleEmbed(client, "colorBG", "success", "Fixed")] })
+            .catch(err => require('../../modules/handleError')(interaction, err))
     }
 }

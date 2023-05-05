@@ -21,9 +21,10 @@ module.exports = {
 
     q.forEach((song, i) => {
       if (i === 0 || i > 23) return
-      if (i === 23) return exampleEmbed.addFields({ name: "And more...", value: `\u200B` })
-      exampleEmbed.addFields({ name: i + `. [${song.name}](${song.url})`, value: `> Uploaded by:\`${song.uploader.name}\` \n > Requested by: ${song.user}` })
+      if (i === 23) return exampleEmbed.addFields({ name: (q.length - 23 )+ " more...", value: `\u200B` })
+      exampleEmbed.addFields({ name: i + `. ${song.name}\n${song.url}`, value: `> Uploaded by:\`${song.uploader.name}\` \n > Requested by: ${song.user}` })
     })
-    interaction.reply({embeds: [exampleEmbed], ephemeral: true})
+    interaction.reply({ embeds: [exampleEmbed], ephemeral: true })
+      .catch(err => require('../../modules/handleError')(interaction, err))
   }
 }

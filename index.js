@@ -33,6 +33,7 @@ for (const folder of commandFolders) {
     const command = require(filePath);
 
     if ('data' in command && 'execute' in command) {
+      command.catorgory = folder
       client.commands.set(command.data.name, command);
       console.log(`[INFO] Loaded command ${command.data.name} from ${filePath}`);
     } else {
@@ -62,10 +63,10 @@ try {
     .on('addSong', (queue, song) => queue.textChannel.send({ embeds: [songinfoEmbed(song, queue, true)] }))
     .on('addList', (queue, playlist) => {
       if (client.addingPlaylist && queue.paused) queue.resume(); client.addingPlaylist = false
-      queue.textChannel.send({ embeds: [playlistinfoEmbed(playlist, queue, true)] })
+      queue.textChannel.send({ embeds: [playlistinfoEmbed(playlist, queue, true)]})
     })
     .on('error', (channel, e) => {
-      if (channel) channel.send({ embeds: [titleEmbed(client, "colorError", "error", `An error encountered: ${e.toString().slice(0, 1974)}`)] })
+        if (channel) channel.send({ embeds: [titleEmbed(client, "colorError", "error", `An error encountered: ${e.toString().slice(0, 1974)}`)] })
     })
     .on('empty', channel => {
       musicControlls(client, titleEmbed(client, "colorBG", "stop", `Nothing is currently playing`))

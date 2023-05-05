@@ -12,7 +12,8 @@ module.exports = {
     async execute(interaction) {
         const user = interaction.options.getUser('user') || interaction.user
         const { xpAnnouncemennts } = interaction.client.config
-        await interaction.deferReply();
+        await interaction.deferReply()
+            .catch(err => require('../../modules/handleError')(interaction, err))
 
 
         const xpPath = path.join(__dirname, `../../xpDatabase/${user.id}`)
@@ -21,6 +22,7 @@ module.exports = {
             fs.writeFileSync(path.join(xpPath, "/xp"), "0")
         }
         var xp = fs.readFileSync(path.join(xpPath, "/xp"), "utf8")
+
         xp = parseInt(xp)
 
         var lvl = xpAnnouncemennts[Math.floor(xp / 1000) * 1000]
@@ -46,6 +48,7 @@ module.exports = {
         interaction.editReply({
             files: [attachment]
         })
+            .catch(err => require('../../modules/handleError')(interaction, err))
 
     }
 }

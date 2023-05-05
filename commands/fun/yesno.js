@@ -6,7 +6,7 @@ module.exports = {
         .setDescription('i say yes or no')
         .addStringOption(option => option.setName('question').setDescription('The question to ask').setRequired(true)),
     async execute(interaction) {
-        const yesno = String(Math.random() * 10).split("")[0] % 2 == 1 ? "yes" : "no";
+        const yesno = Math.random() < 0.5 ? "Yes" : "No"
         const client = interaction.client;
         const question = interaction.options.getString('question');
 
@@ -16,6 +16,7 @@ module.exports = {
             .setDescription(yesno)
             .setTimestamp()
             
-        await interaction.reply({ embeds: [exampleEmbed] });
+        await interaction.reply({ embeds: [exampleEmbed] })
+            .catch(err => require('../../modules/handleError')(interaction, err))
     }
 }

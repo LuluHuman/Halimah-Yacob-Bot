@@ -6,7 +6,7 @@ module.exports = async (client, sub) => {
             'memes',
             'dankmemes',
             'me_irl',
-            'funny',
+            'funny'
         ],
         "aww": ["aww"]
     }

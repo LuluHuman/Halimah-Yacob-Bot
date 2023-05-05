@@ -10,5 +10,6 @@ module.exports = {
     async execute(interaction) {
         const text = interaction.options.getString('text');
         interaction.reply({ content: text, })
+            .catch(err => require('../../modules/handleError')(interaction, err))
     }
 }

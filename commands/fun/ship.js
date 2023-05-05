@@ -18,8 +18,8 @@ module.exports = {
         var name1 = user1.nickname ? user1.nickname : user1.username;
         var name2 = user2.nickname ? user2.nickname : user2.username;
         var name = combinename(name1, name2);
-        interaction.reply("**" + name1 + "** 💞 **" + name2 + "** = **" + name + "**");
-
+        interaction.reply("**" + name1 + "** 💞 **" + name2 + "** = **" + name + "**")
+            .catch(err => require('../../modules/handleError')(interaction, err))
 
 
         function combinename(name1, name2) {

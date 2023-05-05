@@ -14,5 +14,6 @@ module.exports = {
     const song = queue.songs[0]
     const embed2 = songinfoEmbed(song, queue)
     interaction.reply({ embeds: [embed2]})
+      .catch(err => require('../../modules/handleError')(interaction, err))
   }
 }

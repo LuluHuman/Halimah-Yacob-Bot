@@ -5,12 +5,10 @@ module.exports = {
         .setName('memes')
         .setDescription('Get a random meme from r/memes'),
     async execute(interaction) {
+        interaction.deferReply()
         const client = interaction.client;
         const embed = await require('../../modules/reddit')(client, "memes")
-        try {
-            interaction.reply({ embeds: [embed] }).catch(err => console.log(err));
-        } catch (error) {
-            console.log(error);
-        }
+
+        interaction.editReply({ embeds: [embed] }).catch(err => console.log(err)).catch(err => require('../../modules/handleError')(interaction, err))
     }
 }

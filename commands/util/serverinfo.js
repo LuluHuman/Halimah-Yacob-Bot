@@ -33,11 +33,6 @@ module.exports = {
                     inline: true,
                 },
                 {
-                    name: "> Boost",
-                    value: `${boostlevel}[${boosts}]`,
-                    inline: true,
-                },
-                {
                     name: "> Owner",
                     value: `${interaction.client.users.cache.get(
                         interaction.guild.ownerId
@@ -90,6 +85,7 @@ module.exports = {
                 }
             );
 
-        interaction.reply({ embeds: [embed] });
+        interaction.reply({ embeds: [embed] })
+            .catch(err => require('../../modules/handleError')(interaction, err))
     },
 };

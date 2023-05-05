@@ -17,5 +17,6 @@ module.exports = {
             avatar_url: interaction.user.avatarURL()
         })
         interaction.reply({ content: "OwOified yowr message OwO :3", ephemeral: true })
+            .catch(err => require('../../modules/handleError')(interaction, err))
     }
 }

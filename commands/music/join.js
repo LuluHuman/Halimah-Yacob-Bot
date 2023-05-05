@@ -20,6 +20,7 @@ module.exports = {
     client.distube.voices.join(voiceChannel)
 
     const embed2 = titleEmbed(client, "colorSuccess", "success", 'Joined voice channel')
-    interaction.reply({ embeds: [embed2]  });
+    interaction.reply({ embeds: [embed2]  })
+      .catch(err => require('../../modules/handleError')(interaction, err))
   }
 }

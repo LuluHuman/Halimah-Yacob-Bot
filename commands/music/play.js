@@ -14,6 +14,7 @@ module.exports = {
         .setDescription('Song URL/Name')
         .setRequired(true)
     ),
+
   async execute(interaction) {
     var keyword = interaction.options.getString("song");
     const client = interaction.client;
@@ -36,7 +37,7 @@ module.exports = {
         SoundCloudPlugin.search(keyword)
           .then(() => success({ type: "video" }))
           .catch((err) => interactionReply({ error: true, interType: "editReply" }, err))
-      });
+      })
 
 
     // Functions
@@ -44,18 +45,21 @@ module.exports = {
     function success(x, source) {
       const queue = client.distube.getQueue(interaction);
       interaction.editReply({ embeds: [titleEmbed(client, "colorBG", "search", 'Search found!')] })
+        .catch(err => require('../../modules/handleError')(interaction, err))
 
       const items = source === "youtube" ? x.items : x.trackList
       if (x.type !== "track" && !queue && source) playlistHandler(items, source, x)
       if (source && items && items.length > 50) {
         interactionReply("editReply", "colorBG", "warning", `Loading Songs...`)
+          .catch(err => require('../../modules/handleError')(interaction, err))
         if (queue) queue.pause(); client.addingPlaylist = true
       }
       client.distube.play(voiceChannel, keyword, {
         textChannel: interaction.channel,
         member: interaction.member,
-      });
+      }).catch(err => require('../../modules/handleError')(interaction, err))
     }
+
     async function interactionReply(type, color, emoji, title) {
       if (type.error) {
         type = type.interType
@@ -66,7 +70,8 @@ module.exports = {
       return await interaction[type]({
         embeds: [titleEmbed(client, color, emoji, title)],
         ephemeral: true,
-      });
+      })
+        .catch(err => require('../../modules/handleError')(interaction, err))
     }
 
     function playlistHandler(items, source, x) {
@@ -78,10 +83,11 @@ module.exports = {
         songs: items
       }
       interaction.channel.send({ embeds: [playlistinfoEmbed(playlist, queue)] })
+        .catch(err => require('../../modules/handleError')(interaction, err))
     }
     // Query Functions
     async function youtubeQuery(keyword) {
-      const v = await ytpl.validateID(keyword);
+      const v = await ytpl.validateID(keyword)
       if (!v) return interactionReply({ error: true, interType: "editReply" }, 'Invalid Playlist ID')
 
       return await ytpl(keyword)

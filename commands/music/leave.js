@@ -10,7 +10,8 @@ module.exports = {
     client.distube.voices.leave(interaction)
 
     const embed = titleEmbed(client, "colorSuccess", "success", "Left voice channel")
-    interaction.reply({ embeds: [embed] });
+    interaction.reply({ embeds: [embed] })
+      .catch(err => require('../../modules/handleError')(interaction, err))
     musicControlls(client, titleEmbed(client, "colorBG", "stop", `Nothing is currently playing`))
   }
 }

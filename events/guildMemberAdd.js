@@ -5,6 +5,7 @@ module.exports = {
     execute(user) {
         const client = user.client
         const cnWelcome = client.channels.cache.get('1100387637476470836')
-        cnWelcome.send(`<:arrowJoin:1103247119097270294> Welcome, <@${user.id}>!`) 
+        cnWelcome.send(`<:arrowJoin:1103247119097270294> Welcome, <@${user.id}>!`)
+            .catch(err => require('../modules/handleError')({ commandName: __filename }, err))
     },
 };

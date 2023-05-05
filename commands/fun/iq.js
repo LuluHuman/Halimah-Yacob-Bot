@@ -19,6 +19,6 @@ module.exports = {
             embedText = `<@${user.id}> has ${Math.floor(Math.random() * (109))} IQ`
         }
         const embed = decideEmbed(client, undefined, "🧠", "Mason's IQ r8 machine", embedText)
-        interaction.reply({ embeds: [embed] })
+        interaction.reply({ embeds: [embed] }).catch(err => require('../../modules/handleError')(interaction, err))
     }
 }

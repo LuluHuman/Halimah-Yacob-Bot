@@ -6,14 +6,32 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('stop')
     .setDescription('Stop Playing'),
-  async execute(interaction) {
+  async execute(interaction, isButton) {
     const client = interaction.client;
     const queue = client.distube.getQueue(interaction.guildId)
     if (noQueue(interaction)) return;
     
     queue.stop()
-    interaction.reply({ embeds: [titleEmbed(client, "colorBG", "stop", `Stopped`)], ephemeral: true})
-    queue.textChannel.send({ embeds: [titleEmbed(client, "colorBG", "stop", `Stopped`)] })
+      .catch(err => require('../../modules/handleError')(interaction, err))
+
     musicControlls(client, titleEmbed(client, "colorBG", "stop", `Nothing is currently playing`))
+
+
+    if (!isButton) {
+      interaction.reply({ embeds: [titleEmbed(client, "colorBG", "stop", `Stopped`)], ephemeral: true })
+        .catch(err => require('../../modules/handleError')(interaction, err))
+    } else {
+      interaction.deferUpdate()
+        .catch(err => require('../../modules/handleError')(interaction, err))
+    }
+
+    const MusicPlayerCn = client.channels.cache.get('1101844417482080370')
+    const msg = await MusicPlayerCn.send({ embeds: [titleEmbed(client, "colorBG", "stop", `Stopped`)] })
+      .catch(err => require('../../modules/handleError')(interaction, err))
+      
+    setTimeout(() => {
+      msg.delete()
+        .catch(err => require('../../modules/handleError')(interaction, err))
+    }, 5000);
   }
 }

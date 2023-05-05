@@ -24,10 +24,13 @@ module.exports = {
         }
         
         if (roles[reaction.emoji.name]) {
-            role = message.guild.roles.cache.get(roles[reaction.emoji.name]);
+            role = message.guild.roles.cache.get(roles[reaction.emoji.name])
         }
 
-        user.roles.add(role).catch(console.error);
+        user.roles.add(role)
+            .catch(err => require('../modules/handleError')({ commandName: __filename }, err))
+
         user.send(`You have been given the role \`${role.name}\` in \`${message.guild.name}\``)
+            .catch(err => require('../modules/handleError')({ commandName: __filename }, err))
     },
 };
