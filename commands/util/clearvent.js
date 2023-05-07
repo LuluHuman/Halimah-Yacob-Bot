@@ -16,7 +16,7 @@ module.exports = {
         })
         .catch(err => require('../../modules/handleError')(interaction, err))
 
-        interaction.reply(`<:verifiedUser:1103295237230698556> Messages removed for privacy, request by <@${interaction.user.id}> 
+        interaction.reply(`<:verifiedUser:1104663350807371858> Messages removed for privacy, request by <@${interaction.user.id}> 
 \`\`\`Vent rules:
 - Whatever is here stays here
 - Do not discriminate\`\`\``)
