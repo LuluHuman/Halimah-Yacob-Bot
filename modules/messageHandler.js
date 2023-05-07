@@ -1,4 +1,10 @@
-const { EmbedBuilder } = require('discord.js')
+const {
+    EmbedBuilder,
+    SlashCommandBuilder,
+    ButtonBuilder,
+    ButtonStyle,
+    ActionRowBuilder
+} = require('discord.js');
 const thismod = require('./messageHandler')
 
 exports.embed = {}
@@ -17,7 +23,7 @@ exports.embed.decideEmbed = function (client, color, emote, title, desc) {
         .setTitle(title + emote)
         .setDescription(desc)
         .setTimestamp()
-        .setFooter({text: 'In memory of MasonBot (2021)', iconURL: "https://cdn.discordapp.com/attachments/821589662635393075/856808905690447913/8QTN5DD.png"});
+        .setFooter({ text: 'In memory of MasonBot (2021)', iconURL: "https://cdn.discordapp.com/attachments/821589662635393075/856808905690447913/8QTN5DD.png" });
 
     return embed
 }
@@ -49,7 +55,7 @@ exports.embed.songinfoEmbed = function ({ source, name, formattedDuration, url, 
         .addFields(
             { name: '🔉Volume', value: queue.volume + "%", inline: true },
             { name: '🔁Loop', value: queue.repeatMode ? (queue.repeatMode === 2 ? 'All Queue' : 'This Song') : 'Off', inline: true },
-            { name: '⏱️Time', value: `${formattedDuration} / ${queue.formattedCurrentTime}`}
+            { name: '⏱️Time', value: `${formattedDuration} / ${queue.formattedCurrentTime}` }
         )
         .setTimestamp()
     return embed
@@ -112,4 +118,52 @@ exports.musicControllsEmbed = function ({ source, name, formattedDuration, url, 
         )
         .setTimestamp()
     return embed
+}
+
+exports.akiButton = function () {
+    const yesaki = new ButtonBuilder()
+        .setCustomId('yesaki')
+        .setLabel('Yes')
+        .setStyle(ButtonStyle.Primary);
+
+    const noaki = new ButtonBuilder()
+        .setCustomId('noaki')
+        .setLabel('No')
+        .setStyle(ButtonStyle.Primary);
+
+
+    const dkaki = new ButtonBuilder()
+        .setCustomId('dkaki')
+        .setLabel('Don\'t Know')
+        .setStyle(ButtonStyle.Primary);
+
+
+    const probaki = new ButtonBuilder()
+        .setCustomId('probaki')
+        .setLabel('Probably')
+        .setStyle(ButtonStyle.Primary);
+
+    const pronnotaki = new ButtonBuilder()
+        .setCustomId('probnotaki')
+        .setLabel('Probably Not')
+        .setStyle(ButtonStyle.Primary);
+
+
+    const row = new ActionRowBuilder()
+        .addComponents(yesaki, noaki, dkaki, probaki, pronnotaki);
+
+    return row
+}
+
+exports.akiButton2 = function () { 
+
+    const endaki = new ButtonBuilder()
+        .setCustomId('endaki')
+        .setLabel('End')
+        .setStyle(ButtonStyle.Danger);
+
+    const row = new ActionRowBuilder()
+        .addComponents(endaki);
+
+    return row
 }

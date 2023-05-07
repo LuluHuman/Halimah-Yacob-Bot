@@ -1,3 +1,4 @@
+
 //Packages
 const { embed: { songinfoEmbed, titleEmbed, playlistinfoEmbed }, musicControlls, musicControllsEmbed } = require('./modules/messageHandler')
 const config = require('./config.json')
@@ -8,6 +9,9 @@ const fs = require('fs')
 const path = require('path')
 const Discord = require('discord.js')
 
+const https = require('https');
+https.globalAgent.options.ca = fs.readFileSync('node_modules/node_extra_ca_certs_mozilla_bundle/ca_bundle/ca_intermediate_root_bundle.pem');
+
 const client = new Discord.Client(options.Discord)
 client.config = require('./config.json')
 client.db = require('./db.json');
@@ -15,6 +19,7 @@ client.distube = new DisTube(client, options.DisTube)
 client.commands = new Discord.Collection()
 client.aliases = new Discord.Collection()
 client.xpTimer = new Map()
+client.akigames = new Map()
 client.emotes = config.emoji
 client.addingPlaylist = false
 
@@ -79,4 +84,4 @@ try {
 } catch (error) {
   console.log(error);
 }
-client.login(config.bot.token)
+client.login(config.bot.tokenTest)
